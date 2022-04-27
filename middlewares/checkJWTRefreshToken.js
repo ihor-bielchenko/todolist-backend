@@ -22,7 +22,7 @@ const checkJWTRefreshToken = (req, res, next) => {
 				message: 'refresh_token is old',
 			});
 	}
-	req.body['email'] = payload.email;
+	req.query['authName'] = payload.name;
 	return next();
 };
 

@@ -22,6 +22,7 @@ const checkJWTAccessToken = (req, res, next) => {
 				message: 'access_token is old',
 			});
 	}
+	req.query['authName'] = payload.name;
 	return next();
 };
 

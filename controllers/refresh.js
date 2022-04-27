@@ -2,7 +2,7 @@ const serviceUser = require('../services/user.js');
 
 const refresh = async (req, res) => {
 	try {
-		const data = await serviceUser.refresh(req.query.name);
+		const data = await serviceUser.refresh(req.query.authName);
 
 		return res.json({
 			message: 'successfully refreshed tokens',
