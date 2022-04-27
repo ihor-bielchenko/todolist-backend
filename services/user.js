@@ -81,7 +81,7 @@ const checkToken = (token = '', key = '', payload = {}) => {
 };
 
 const login = async function (name, password) {
-	const user = await repositoryUser.getOne({ name });
+	const user = await repositoryUser.getOne({ where: { name } });
 
 	if (await _checkPassword(password, user.dataValues.password)) {
 		return _generateTokens(user);
@@ -90,7 +90,7 @@ const login = async function (name, password) {
 };
 
 const refresh = async function (name) {
-	const user = await repositoryUser.getOne({ name });
+	const user = await repositoryUser.getOne({ where: { name } });
 
 	if (user) {
 		const {
