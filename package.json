@@ -1,0 +1,30 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "Revenue Media - platform for partners",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server.js"
+  },
+  "keywords": [],
+  "author": "ihor-bielchenko",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-brute": "^1.0.1",
+    "express-subdomain": "^1.0.5",
+    "mariadb": "^3.0.0",
+    "sequelize": "^6.18.0",
+    "sequelize-cli": "^6.4.1",
+    "xss-clean": "^0.1.1"
+  }
+}
