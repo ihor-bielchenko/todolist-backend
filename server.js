@@ -13,11 +13,17 @@ const onExit = require('./handlers/onExit.js');
 const onUncaughtException = require('./handlers/onUncaughtException.js');
 const onUncaughtExceptionMonitor = require('./handlers/onUncaughtExceptionMonitor.js');
 
+const middlewareCheckHasJWTRefreshToken = require('./middlewares/checkHasJWTRefreshToken.js');
+const middlewareCheckHasJWTAccessToken = require('./middlewares/checkHasJWTAccessToken.js');
+const middlewareCheckJWTRefreshToken = require('./middlewares/checkJWTRefreshToken.js');
+const middlewareCheckJWTAccessToken = require('./middlewares/checkJWTAccessToken.js');
 const middlewareCheckHasPassword = require('./middlewares/checkHasPassword.js');
+const middlewareCheckHasLogin = require('./middlewares/checkHasLogin.js');
 const middlewareTaskListParseQueryProperties = require('./middlewares/taskListParseQueryProperties.js');
 const middlewareTaskDataValidate = require('./middlewares/taskDataValidate.js');
 
 const controllerLogin = require('./controllers/login.js');
+const controllerRefresh = require('./controllers/refresh.js');
 const controllerTaskList = require('./controllers/taskList.js');
 const controllerTaskCreate = require('./controllers/taskCreate.js');
 const controllerTaskUpdate = require('./controllers/taskUpdate.js');
@@ -33,11 +39,23 @@ app.use(xssClean());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/login', middlewareCheckHasPassword, controllerLogin);
+app.get('/login', [
+	middlewareCheckHasLogin,
+	middlewareCheckHasPassword,
+], controllerLogin);
+app.post('/refresh', [
+	middlewareCheckHasJWTAccessToken, 
+	middlewareCheckHasJWTRefreshToken, 
+	middlewareCheckJWTRefreshToken,
+], controllerRefresh);
+
 app.get('/task', middlewareTaskListParseQueryProperties, controllerTaskList);
 app.post('/task', middlewareTaskDataValidate, controllerTaskCreate);
 app.patch('/task/:id', middlewareTaskDataValidate, controllerTaskUpdate);
-app.patch('/task/:id/status', controllerTaskStatus);
+app.patch('/task/:id/status', [
+	middlewareCheckHasJWTAccessToken,
+	middlewareCheckJWTAccessToken,
+], controllerTaskStatus);
 app.delete('/task/:id', controllerTaskDelete);
 
 app.listen(port, () => {

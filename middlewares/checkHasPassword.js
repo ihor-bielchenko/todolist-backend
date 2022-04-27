@@ -1,7 +1,8 @@
 
 const checkHasPassword = (req, res, next) => {
-	if (req.body['password']
-		|| req.query['password']) {
+	req.query['password'] = req.query['password'] || req.body['password'];
+
+	if (req.query['password']) {
 		return next();
 	}
 

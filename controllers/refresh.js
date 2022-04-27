@@ -1,14 +1,11 @@
 const serviceUser = require('../services/user.js');
 
-/**
- * 
- */
-const login = async (req, res) => {
+const refresh = async (req, res) => {
 	try {
-		const data = await serviceUser.login(req.query.name, req.query.password);
+		const data = await serviceUser.refresh(req.query.name);
 
 		return res.json({
-			message: 'successfully found user '+ (req.body['email'] ?? req.query['email']),
+			message: 'successfully refreshed tokens',
 			data,
 		});
 	}
@@ -24,4 +21,4 @@ const login = async (req, res) => {
 	});
 };
 
-module.exports = login;
+module.exports = refresh;
