@@ -16,11 +16,10 @@ const checkJWTRefreshToken = (req, res, next) => {
 	}
 
 	if ((Date.now() - Number(process.env.JWT_REFRESH_TIMEOUT)) > Number(payload.iat)) {
-		result.setMessage('refresh_token is old');
 		return res
 			.status(401)
 			.json({
-				message: 'refresh_token is not valid',
+				message: 'refresh_token is old',
 			});
 	}
 	req.body['email'] = payload.email;

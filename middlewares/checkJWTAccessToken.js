@@ -10,15 +10,16 @@ const checkJWTAccessToken = (req, res, next) => {
 	})) {
 		return res
 			.status(401)
-			.json(result.output());
+			.json({
+				message: 'access_token is not valid',
+			});
 	}
 
 	if ((Date.now() - Number(process.env.JWT_ACCESS_TIMEOUT)) > Number(payload.iat)) {
-		result.setMessage('access_token is old');
 		return res
 			.status(401)
 			.json({
-				message: 'access_token is not valid',
+				message: 'access_token is old',
 			});
 	}
 	return next();
