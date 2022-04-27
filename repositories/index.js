@@ -3,76 +3,51 @@ const getOne = (Model) => async function (props = {}) {
 	const modelItem = await Model.findOne({ ...props });
 
 	if (!modelItem) {
-		throw new Error('repository getOne');
+		throw new Error('model not found');
 	}
 	return modelItem;
 };
 
 const getMany = (Model) => async function (props = {}) {
-	try {
-		return await Model.findAll({ ...props });
-	}
-	catch (err) {
-		throw new Error('repository getMany');
-	}
+	return await Model.findAll({ ...props });
 };
 
 const paginate = (Model) => async function (page, limit, props = {}) {
-	try {
-		const offset = (page > 0)
-			? (page * limit)
-			: 0;
+	const offset = (page > 0)
+		? (page * limit)
+		: 0;
 
-		return await Model.findAndCountAll({ 
-			offset,
-			limit,
-			...props,
-		});
-	}
-	catch (err) {
-		throw new Error('repository paginate');
-	}
+	return await Model.findAndCountAll({ 
+		offset,
+		limit,
+		...props,
+	});
 };
 
 const create = (Model) => async function (props) {
-	try {
-		return await Model.create({ ...props });
-	}
-	catch (err) {
-		throw new Error('repository create');
-	}
+	return await Model.create({ ...props });
 };
 
 const update = (Model) => async function (id, props = {}) {
-	try {
-		const modelItem = await Model.findOne({
-			where: {
-				id,
-			},
-		});
+	const modelItem = await Model.findOne({
+		where: {
+			id,
+		},
+	});
 
-		modelItem.update(props);
-		return modelItem;
-	}
-	catch (err) {
-		throw new Error('repository update');
-	}
+	modelItem.update(props);
+	return modelItem;
 };
 
 const remove = (Model) => async function (id) {
-	try {
-		const modelItem = await Model.findOne({
-			where: {
-				id,
-			},
-		});
+	const modelItem = await Model.findOne({
+		where: {
+			id,
+		},
+	});
 
-		modelItem.destroy();
-		return true;
-	}
-	catch (err) {
-		throw new Error('repository remove');
-	}
+	modelItem.destroy();
+	return true;
 };
 
 const repository = (model) => {

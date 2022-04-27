@@ -3,21 +3,11 @@ const bcrypt = require('bcrypt');
 const repositoryUser = require('../repositories/user.js');
 
 const _encryptPassword = async (realPassword = '') => {
-	try {
-		return await bcrypt.hash(realPassword, 10);
-	}
-	catch (err) {
-		throw new Error('service user _encryptPassword');
-	}
+	return await bcrypt.hash(realPassword, 10);
 };
 
 const _checkPassword = async (realPassword = '', bcryptHash = '') => {
-	try {
-		return await bcrypt.compare(realPassword, bcryptHash);
-	}
-	catch (err) {
-		throw new Error('service user _checkPassword');
-	}
+	return await bcrypt.compare(realPassword, bcryptHash);
 }
 
 const _generateTokens = (user) => {
@@ -86,7 +76,7 @@ const login = async function (name, password) {
 	if (await _checkPassword(password, user.dataValues.password)) {
 		return _generateTokens(user);
 	}
-	throw new Error('service user login');
+	throw new Error('Incorrect password');
 };
 
 const refresh = async function (name) {
